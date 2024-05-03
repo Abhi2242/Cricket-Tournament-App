@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/dimen_40"
+    android:maxHeight="@dimen/dimen_60"
+    android:orientation="horizontal" >
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_item_id"
+        style="@style/TextView12BoldBlack"
+        android:layout_width="@dimen/dimen_60"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:background="@drawable/table_content_left_cell_bg"
+        android:gravity="center"
+        android:paddingStart="@dimen/dimen_5"
+        android:paddingEnd="@dimen/dimen_5"
+        android:text="@string/id" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_item_team_name"
+        style="@style/TextView12BoldBlack"
+        android:layout_width="@dimen/dimen_200"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:maxLines="1"
+        android:background="@drawable/table_content_left_cell_bg"
+        android:gravity="center"
+        android:padding="@dimen/dimen_5"
+        android:text="Team Name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_item_team_owner"
+        style="@style/TextView12BoldBlack"
+        android:layout_width="@dimen/dimen_200"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:maxLines="1"
+        android:background="@drawable/table_content_left_cell_bg"
+        android:gravity="center"
+        android:paddingStart="@dimen/dimen_5"
+        android:paddingEnd="@dimen/dimen_5"
+        android:text="Team Owner" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/txt_item_spinner_status"
+        style="@style/TextView12BoldBlack"
+        android:layout_width="@dimen/dimen_150"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:background="@drawable/table_content_left_cell_bg"
+        android:gravity="center"
+        android:paddingStart="@dimen/dimen_5"
+        android:paddingEnd="@dimen/dimen_5"
+        android:text="Entry Type/Status" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/txt_item_spinner_category"
+        style="@style/TextView12BoldBlack"
+        android:layout_width="@dimen/dimen_150"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:background="@drawable/table_content_left_cell_bg"
+        android:gravity="center"
+        android:paddingStart="@dimen/dimen_5"
+        android:paddingEnd="@dimen/dimen_5"
+        android:text="Entry Category" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_item_player_name"
+        style="@style/TextView12BoldBlack"
+        android:layout_width="@dimen/dimen_200"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:background="@drawable/table_content_left_cell_bg"
+        android:gravity="center"
+        android:paddingStart="@dimen/dimen_5"
+        android:paddingEnd="@dimen/dimen_5"
+        android:text="Players Name" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/txt_item_delete"
+        android:layout_width="55dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:background="@drawable/table_content_left_cell_bg"
+        android:gravity="center"
+        android:src="@drawable/icon_delete"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

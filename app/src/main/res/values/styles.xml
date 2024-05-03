@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppNewTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorNewPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorNewAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppThemeButton" parent="AppNewTheme">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_height">@dimen/dimen_40</item>
+    </style>
+
+    <style name="ButtonRed" parent="AppThemeButton">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/btn_curved_red</item>
+    </style>
+
+    <style name="TextView12BoldBlack" parent="AppNewTheme">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+</resources>

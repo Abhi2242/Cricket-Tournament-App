@@ -4,15 +4,365 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/white"
+    tools:context=".views.activities.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_new_team"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:textSize="@dimen/text_size_25"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/ll"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:text="@string/team_name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/teamName"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:hint="@string/enter_team_name"
+                    android:textColorHint="#878484"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                app:layout_constraintTop_toBottomOf="@id/ll"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:text="@string/team_owner"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/teamOwnerName"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:hint="@string/enter_name"
+                    android:textColorHint="#878484"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                app:layout_constraintTop_toBottomOf="@id/ll1"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:text="@string/entry_status"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+                <Spinner
+                    android:id="@+id/spinnerStatus"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                app:layout_constraintTop_toBottomOf="@id/ll2"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/entry_category"
+                    android:textAlignment="textStart"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+                <Spinner
+                    android:id="@+id/spinnerCategory"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/player_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_players"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:textSize="@dimen/text_size_25"
+                android:textStyle="bold|italic"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll3" />
+
+            <LinearLayout
+                android:id="@+id/ll4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                app:layout_constraintTop_toBottomOf="@id/player_title"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:text="@string/player_1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/p1Name"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:hint="@string/enter_name"
+                    android:textColorHint="#878484"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                app:layout_constraintTop_toBottomOf="@id/ll4"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:text="@string/player_2"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/p2Name"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:hint="@string/enter_name"
+                    android:textColorHint="#878484"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                app:layout_constraintTop_toBottomOf="@id/ll5"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:text="@string/player_3"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/p3Name"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:hint="@string/enter_name"
+                    android:textColorHint="#878484"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll7"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                app:layout_constraintTop_toBottomOf="@id/ll6"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:text="@string/player_4"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/p4Name"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:hint="@string/enter_name"
+                    android:textColorHint="#878484"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll8"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                app:layout_constraintTop_toBottomOf="@id/ll7"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:text="@string/player_5"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/p5Name"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:hint="@string/enter_name"
+                    android:textColorHint="#878484"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll9"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                app:layout_constraintTop_toBottomOf="@id/ll8"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="1.5"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:paddingLeft="@dimen/dimen_20"
+                    android:text="@string/sub_player"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/p6Name"
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:hint="@string/enter_name"
+                    android:textColorHint="#878484"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAddTeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ButtonRed"
+                android:text="@string/add_team"
+                android:textSize="@dimen/text_size_18"
+                android:paddingStart="@dimen/dimen_5"
+                android:paddingEnd="@dimen/dimen_5"
+                app:layout_constraintTop_toBottomOf="@id/ll9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/dimen_30"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
