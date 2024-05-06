@@ -7,6 +7,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -21,6 +22,7 @@ import com.smartgeek.crickettournamentapp.R
 import com.smartgeek.crickettournamentapp.model.PlayerData
 import com.smartgeek.crickettournamentapp.model.TeamData
 import java.io.File
+import java.io.FileWriter
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var p5Name: TextView
     private lateinit var p6Name: TextView
     private lateinit var btnAddTeam: Button
+    private lateinit var btnDisplayTeams: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         p5Name = findViewById(R.id.p5Name)
         p6Name = findViewById(R.id.p6Name)
         btnAddTeam = findViewById(R.id.btnAddTeam)
+        btnDisplayTeams = findViewById(R.id.btnDisplayTeams)
 
         if (checkStoragePermission()){
             getData()
@@ -73,13 +77,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnAddTeam.setOnClickListener {
-//            if (checkStoragePermission()) {
-//                submitTeam()
-//            } else {
-//                checkStoragePermission()
-//            }
+            if (checkStoragePermission()) {
+                submitTeam()
+            } else {
+                checkStoragePermission()
+            }
+        }
 
-            startActivity(Intent(this, DisplayTeamsInTable::class.java))
+        btnDisplayTeams.setOnClickListener {
+            if (existingData.isNotEmpty()){
+                startActivity(Intent(this, DisplayTeamsInTable::class.java))
+            }
+            else{
+                Toast.makeText(this, "Add a Team First!", Toast.LENGTH_LONG).show()
+            }
         }
 
         setSpinnerView()
@@ -102,7 +113,48 @@ class MainActivity : AppCompatActivity() {
                 spinnerCategoryValue,
                 playerList
             )
+
+            addTeam()
         }
+    }
+
+    private fun addTeam() {
+        val teamName = addTeamDetails.tName
+        val playerNames = addTeamDetails.tPlayersData.map { it.pName } // Extracting player names from TeamData
+
+        if (existingData.isNotEmpty()){
+            if (existingData.any { it.tName != teamName }) {
+                if (playerNames.any { playerName -> existingData.any { teamData ->
+                        teamData.tPlayersData.any { playerData -> playerData.pName == playerName }
+                    } })
+                {
+                    Toast.makeText(this, "Player Already Exists", Toast.LENGTH_LONG).show()
+                } else {
+                    addDataToTable()
+                }
+            } else {
+                Toast.makeText(this, "Team Name Already Exist", Toast.LENGTH_LONG).show()
+            }
+        }
+        else{
+            addDataToTable()
+        }
+    }
+
+    private fun addDataToTable() {
+        existingData.add(addTeamDetails)
+
+        val json = Gson().toJson(existingData)
+
+        FileWriter(pdfTableDataFile).use { writer ->
+            writer.write(json)
+        }
+        Log.v("Pdf Table", json.toString())
+        existingData.clear()
+        existingData = readDataFromFile(pdfTableDataFile)
+        Toast.makeText(this, "Team added to table", Toast.LENGTH_LONG).show()
+
+        startActivity(Intent(this, DisplayTeamsInTable::class.java))
     }
 
     private fun getData() {

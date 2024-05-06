@@ -55,7 +55,7 @@
         android:paddingEnd="@dimen/dimen_5"
         android:text="Entry Type/Status" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_item_spinner_category"
         style="@style/TextView12BoldBlack"
         android:layout_width="@dimen/dimen_150"

@@ -1,6 +1,7 @@
 package com.smartgeek.crickettournamentapp.views.activities
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.smartgeek.crickettournamentapp.R
+import com.smartgeek.crickettournamentapp.contract.TableOperationContract
 import com.smartgeek.crickettournamentapp.model.TeamData
 import com.smartgeek.crickettournamentapp.views.adapter.TableViewAdapter
 import java.io.File
+import java.io.FileWriter
 
-class DisplayTeamsInTable : AppCompatActivity() {
+class DisplayTeamsInTable : AppCompatActivity(), TableOperationContract {
 
     private var folderName: String = ""
     private lateinit var folder: File
@@ -49,7 +52,6 @@ class DisplayTeamsInTable : AppCompatActivity() {
         tableRCV.layoutManager = LinearLayoutManager(this)
         mAdapter = TableViewAdapter(this, existingData, this)
         tableRCV.adapter = mAdapter
-        mAdapter?.notifyDataSetChanged()
     }
 
     private fun readDataFromFile(file: File): MutableList<TeamData> {
@@ -126,5 +128,31 @@ class DisplayTeamsInTable : AppCompatActivity() {
 
     companion object {
         private const val STORAGE_PERMISSION_CODE = 100
+    }
+
+    override fun deleteRow(position: Int) {
+        existingData.removeAt(position)
+        saveDataToFile(existingData)
+    }
+
+    override fun tableEmpty() {
+        startActivity(Intent(this, MainActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+    }
+
+    override fun updateStatus(position: Int, pStatus: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateDate(position: Int, date: String) {
+        TODO("Not yet implemented")
+    }
+
+    private fun saveDataToFile(data: List<TeamData>) {
+        val json = Gson().toJson(data)
+        FileWriter(pdfTableDataFile).use { writer ->
+            writer.write(json)
+        }
+        mAdapter?.notifyDataSetChanged()
     }
 }
