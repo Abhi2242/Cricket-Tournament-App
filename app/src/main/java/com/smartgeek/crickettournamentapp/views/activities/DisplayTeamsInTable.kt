@@ -141,7 +141,8 @@ class DisplayTeamsInTable : AppCompatActivity(), TableOperationContract {
     }
 
     override fun updateStatus(position: Int, pStatus: Int) {
-        TODO("Not yet implemented")
+        existingData[position].tEntryStatus = pStatus
+        saveDataToFile(existingData)
     }
 
     override fun updateDate(position: Int, date: String) {

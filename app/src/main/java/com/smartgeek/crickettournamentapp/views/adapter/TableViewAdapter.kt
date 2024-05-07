@@ -15,12 +15,10 @@ import com.bumptech.glide.Glide
 import com.smartgeek.crickettournamentapp.R
 import com.smartgeek.crickettournamentapp.contract.TableOperationContract
 import com.smartgeek.crickettournamentapp.model.TeamData
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class TableViewAdapter(
     private val context: Context,
-    private val TeamList: MutableList<TeamData>,
+    private val teamList: MutableList<TeamData>,
     private val clickListener: TableOperationContract
 ) : RecyclerView.Adapter<TableViewAdapter.ViewHolder>() {
 
@@ -33,12 +31,12 @@ class TableViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return TeamList.size
+        return teamList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val mPosition = position
-        val item = TeamList[mPosition]
+        val mPosition: Int = position
+        val item = teamList[mPosition]
 
         val mId = mPosition + 1
         holder.txtId.text = mId.toString()
@@ -67,46 +65,40 @@ class TableViewAdapter(
         val statusAdapter = ArrayAdapter(context, R.layout.spinner_item, statusList)
         holder.spinnerStatus.adapter = statusAdapter
         // Set default status
-        holder.spinnerStatus.setSelection(item.tEntryStatus)
+        val defaultValue = item.tEntryStatus
+        holder.spinnerStatus.setSelection(defaultValue)
+
+        holder.spinnerStatus.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                statusPosition: Int,
+                id: Long
+            ) {
+
+                if (defaultValue != statusPosition && statusPosition != 0) {
+                    item.tEntryStatus = statusPosition
+                    clickListener.updateStatus(mPosition, statusPosition)
+                }
+                else{
+                    item.tEntryStatus = defaultValue
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                item.tEntryStatus = defaultValue
+            }
+        }
 
         val categoryList = context.resources.getStringArray(R.array.entry_category_list)
         // Set default status
         holder.spinnerCategory.text = categoryList[item.tCategory]
 
-//        holder.mySpinner.onItemSelectedListener = object :
-//            AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//
-//                if (defaultValue != position && position != 0) {
-//                    item.paymentType = position
-//                    clickListener.updateStatus(mPosition, position)
-//                }
-//
-////                if (taskStatus[position] == "Pending"){
-////                    holder.mySpinner.setBackgroundResource(R.color.spinnerRed)
-////                }
-////                else if (taskStatus[position] == "In Process"){
-////                    holder.mySpinner.setBackgroundResource(R.color.spinnerBlue)
-////                }
-////                else if (taskStatus[position] == "Done"){
-////                    holder.mySpinner.setBackgroundResource(R.color.spinnerGreen)
-////                }
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {
-//                item.paymentType = defaultValue
-//            }
-//        }
-
         holder.imgDelete.setOnClickListener {
-            if (TeamList.size > 1) {
+            if (teamList.size > 1) {
                 clickListener.deleteRow(mPosition)
-                for (i in 0 until (TeamList.size)) {
+                for (i in 0 until (teamList.size)) {
                     val id = i + 1
                     holder.txtId.text = id.toString()
                 }
