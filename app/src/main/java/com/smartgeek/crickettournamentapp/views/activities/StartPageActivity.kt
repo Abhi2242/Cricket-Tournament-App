@@ -7,37 +7,61 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.smartgeek.crickettournamentapp.R
-import com.smartgeek.crickettournamentapp.contract.TableOperationContract
 import com.smartgeek.crickettournamentapp.model.TeamData
-import com.smartgeek.crickettournamentapp.views.adapter.TableViewAdapter
 import java.io.File
-import java.io.FileWriter
 
-class DisplayTeamsInTable : AppCompatActivity(), TableOperationContract {
+class StartPageActivity : AppCompatActivity() {
 
     private var folderName: String = ""
     private lateinit var folder: File
     private lateinit var pdfTableDataFile: File
     private lateinit var existingData: MutableList<TeamData>
-    private lateinit var tableRCV: RecyclerView
-    private var mAdapter: TableViewAdapter? = null
+    private lateinit var addTeam: Button
+    private lateinit var displayTable: Button
+    private lateinit var displayMatches: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_display_teams_in_table)
+        setContentView(R.layout.activity_start_page)
 
-        initView()
         checkStoragePermission()
+        initView()
     }
 
     private fun initView() {
-        tableRCV = findViewById(R.id.rcv_table)
+        addTeam = findViewById(R.id.add_team)
+        displayTable = findViewById(R.id.display_table)
+        displayMatches = findViewById(R.id.display_match)
+
+        if (checkStoragePermission()){
+            getData()
+        }
+        else{
+            Toast.makeText(this, "Storage permission is required", Toast.LENGTH_LONG).show()
+            checkStoragePermission()
+        }
+
+        addTeam.setOnClickListener {
+            startActivity(Intent(this, AddTeamsActivity::class.java))
+        }
+
+        displayTable.setOnClickListener {
+            startActivity(Intent(this, DisplayTeamsInTable::class.java))
+        }
+
+        displayMatches.setOnClickListener {
+            Toast.makeText(this, "Display Matches", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getData() {
         folderName = this.getString(R.string.app_name)
         folder = File(this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), folderName)
         pdfTableDataFile = File(folder, "$folderName.json")
@@ -45,13 +69,14 @@ class DisplayTeamsInTable : AppCompatActivity(), TableOperationContract {
         folder.mkdirs()
         existingData = readDataFromFile(pdfTableDataFile)
 
-        initTableRCV()
-    }
-
-    private fun initTableRCV() {
-        tableRCV.layoutManager = LinearLayoutManager(this)
-        mAdapter = TableViewAdapter(this, existingData, this)
-        tableRCV.adapter = mAdapter
+        if (existingData.isNotEmpty()){
+            displayTable.visibility = View.VISIBLE
+            displayMatches.visibility = View.VISIBLE
+        }
+        else{
+            displayTable.visibility = View.GONE
+            displayMatches.visibility = View.GONE
+        }
     }
 
     private fun readDataFromFile(file: File): MutableList<TeamData> {
@@ -128,32 +153,5 @@ class DisplayTeamsInTable : AppCompatActivity(), TableOperationContract {
 
     companion object {
         private const val STORAGE_PERMISSION_CODE = 100
-    }
-
-    override fun deleteRow(position: Int) {
-        existingData.removeAt(position)
-        saveDataToFile(existingData)
-    }
-
-    override fun tableEmpty() {
-        startActivity(Intent(this, AddTeamsActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-    }
-
-    override fun updateStatus(position: Int, pStatus: Int) {
-        existingData[position].tEntryStatus = pStatus
-        saveDataToFile(existingData)
-    }
-
-    override fun updateDate(position: Int, date: String) {
-        TODO("Not yet implemented")
-    }
-
-    private fun saveDataToFile(data: List<TeamData>) {
-        val json = Gson().toJson(data)
-        FileWriter(pdfTableDataFile).use { writer ->
-            writer.write(json)
-        }
-        mAdapter?.notifyDataSetChanged()
     }
 }

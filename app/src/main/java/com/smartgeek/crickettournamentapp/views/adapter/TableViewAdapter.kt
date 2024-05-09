@@ -45,6 +45,7 @@ class TableViewAdapter(
 
         holder.txtOwnerName.text = item.tOwner
 
+        playerNames = ""
         for (p in 0 .. 5){
             playerNames += if (p >= 5){
                 item.tPlayersData[p].pName

@@ -24,7 +24,7 @@ import com.smartgeek.crickettournamentapp.model.TeamData
 import java.io.File
 import java.io.FileWriter
 
-class MainActivity : AppCompatActivity() {
+class AddTeamsActivity : AppCompatActivity() {
 
     private var folderName: String = ""
     private lateinit var folder: File
@@ -48,10 +48,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_add_teams)
 
         checkStoragePermission()
         initView()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        addTask()
+    }
+
+    private fun addTask() {
+        startActivity(
+            Intent(this, StartPageActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        )
+        finish()
     }
 
     private fun initView() {
@@ -154,7 +168,22 @@ class MainActivity : AppCompatActivity() {
         existingData = readDataFromFile(pdfTableDataFile)
         Toast.makeText(this, "Team added to table", Toast.LENGTH_LONG).show()
 
-        startActivity(Intent(this, DisplayTeamsInTable::class.java))
+        resetDisplay()
+    }
+
+    private fun resetDisplay() {
+        spinnerStatusValue = 0
+        spinnerCategoryValue = 0
+        teamName.text = ""
+        teamOwnerName.text = ""
+        p1Name.text = ""
+        p2Name.text = ""
+        p3Name.text = ""
+        p4Name.text = ""
+        p5Name.text = ""
+        p6Name.text = ""
+        existingData.clear()
+        getData()
     }
 
     private fun getData() {
@@ -164,6 +193,13 @@ class MainActivity : AppCompatActivity() {
         // if folder is empty then create
         folder.mkdirs()
         existingData = readDataFromFile(pdfTableDataFile)
+
+        if (existingData.isNotEmpty()){
+            btnDisplayTeams.visibility = View.VISIBLE
+        }
+        else{
+            btnDisplayTeams.visibility = View.GONE
+        }
     }
 
     private fun readDataFromFile(file: File): MutableList<TeamData> {
@@ -187,26 +223,26 @@ class MainActivity : AppCompatActivity() {
                         ) {
                             true
                         } else {
-                            Toast.makeText(this@MainActivity, "Missing Player", Toast.LENGTH_SHORT)
+                            Toast.makeText(this@AddTeamsActivity, "Missing Player", Toast.LENGTH_SHORT)
                                 .show()
                             false
                         }
                     } else {
-                        Toast.makeText(this@MainActivity, "Select Category", Toast.LENGTH_SHORT)
+                        Toast.makeText(this@AddTeamsActivity, "Select Category", Toast.LENGTH_SHORT)
                             .show()
                         false
                     }
                 } else {
-                    Toast.makeText(this@MainActivity, "Select Entry Status", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@AddTeamsActivity, "Select Entry Status", Toast.LENGTH_SHORT)
                         .show()
                     false
                 }
             } else {
-                Toast.makeText(this@MainActivity, "Missing Owner Name", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddTeamsActivity, "Missing Owner Name", Toast.LENGTH_SHORT).show()
                 false
             }
         } else {
-            Toast.makeText(this@MainActivity, "Missing Team Name", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@AddTeamsActivity, "Missing Team Name", Toast.LENGTH_SHORT).show()
             false
         }
     }

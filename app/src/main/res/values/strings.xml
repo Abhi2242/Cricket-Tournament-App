@@ -17,6 +17,8 @@
     <string name="add_new_team"><u>Add New Team</u></string>
     <string name="id">Id</string>
     <string name="display_teams">Display Teams</string>
+    <string name="img">img</string>
+    <string name="display_matches">Display Matches</string>
 
     <string-array name="entry_status_list">
         <item>Select Entry Status</item>
